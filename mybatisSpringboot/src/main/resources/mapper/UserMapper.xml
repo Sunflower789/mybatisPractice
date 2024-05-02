@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.demo.mapper.UserMapper">
+    <select id="selectUser" resultType="com.demo.entity.User">
+        select * from tb_user where id = #{id}
+    </select>
+
+    <!-- 某字段如需特殊处理可以设置结果集，一般推荐注解方式 -->
+    <resultMap id="userResultMap" type="User">
+        <id property="id" column="id" />
+        <result property="name" column="name"/>
+        <result property="age" column="age"/>
+        <result property="userLevel" column="user_level"/>
+    </resultMap>
+
+    <!-- 可以适用sql标签写一些需要重复使用的sql语句 -->
+    <sql id="user">
+        id,name,age,user_level
+    </sql>
+
+    <!-- 复杂动态sql查询 -->
+    <select id="select1" resultType="com.demo.entity.User">
+        select
+        <include refid="user" />  <!--引用sql标签内容-->
+        from tb_user
+        <where>
+            <if test="map.name != null and map.name != ''">
+                and name = #{map.name}  <!--#{}会替换预编译里的？，而${}是拼接sql语句或字符串替换的占位符；需要根据实际情况选用-->
+            </if>
+            <if test="map.ids != null and map.ids.size() > 0">
+                and id in
+                <foreach collection="map.ids" item="id" open="(" separator="," close=")">
+                    #{id}
+                </foreach>
+            </if>
+            <if test="ageMax != null">
+                and age <![CDATA[ <= ]]> #{ageMax}  <!--特殊字符需要使用<![CDATA[xxx]]>包起来（IDEA快捷键CD）-->
+            </if>
+        </where>
+    </select>
+
+</mapper>
