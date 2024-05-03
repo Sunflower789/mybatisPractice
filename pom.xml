@@ -13,6 +13,7 @@
         <module>mybatis</module>
         <module>mybatisSpring</module>
         <module>mybatisSpringboot</module>
+        <module>mybatisSpringbootMultiple</module>
     </modules>
 
 

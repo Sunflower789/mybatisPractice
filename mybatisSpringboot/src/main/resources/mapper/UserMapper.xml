@@ -41,4 +41,17 @@
         </where>
     </select>
 
+    <insert id="insertOne" parameterType="com.demo.entity.User" useGeneratedKeys="true" keyProperty="id">
+        insert into `tb_user`(`name`,`age`,`user_level`)
+        values(#{name}, #{age}, #{userLevel})
+    </insert>
+
+    <insert id="insertBatch" parameterType="list" useGeneratedKeys="true" keyProperty="id">
+        insert into tb_user(name,age,user_level)
+        values
+        <foreach collection="users" item="user" separator=",">
+            (#{user.name}, #{user.age}, #{user.userLevel})
+        </foreach>
+    </insert>
+
 </mapper>

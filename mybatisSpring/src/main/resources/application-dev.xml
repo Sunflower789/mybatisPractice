@@ -11,19 +11,19 @@
                            http://mybatis.org/schema/mybatis-spring.xsd">
 
 <!--    &lt;!&ndash; 扫描 Mapper 接口所在的包 &ndash;&gt;-->
-<!--    <context:component-scan base-package="mapper"/>-->
+<!--    <context:component-scan base-package="com.demo.mapper"/>-->
 
 <!--    &lt;!&ndash; 扫描 MyBatis Mapper 接口 &ndash;&gt;-->
-<!--    <mybatis-spring:scan base-package="mapper"/>-->
+<!--    <mybatis-spring:scan base-package="com.demo.mapper"/>-->
 
     <!-- 扫描路径 配置 -->
-    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="mapper" />
+    <bean class="org.mybatis.spring.com.demo.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.demo.mapper" />
     </bean>
 
 <!--    &lt;!&ndash; mapper接口 &ndash;&gt;-->
-<!--    <bean id="userMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">-->
-<!--        <property name="mapperInterface" value="com.demo.mapper.UserMapper" />-->
+<!--    <bean id="userMapper" class="org.mybatis.spring.com.demo.mapper.MapperFactoryBean">-->
+<!--        <property name="mapperInterface" value="com.demo.com.demo.mapper.UserMapper" />-->
 <!--        <property name="sqlSessionFactory" ref="sqlSessionFactory" />-->
 <!--    </bean>-->
 
@@ -38,7 +38,7 @@
     <!-- sqlSessionFactory配置 -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mapperLocations" value="classpath*:mapper/*.xml"/>
+        <property name="mapperLocations" value="classpath*:com.demo.mapper/*.xml"/>
     </bean>
 
 </beans>

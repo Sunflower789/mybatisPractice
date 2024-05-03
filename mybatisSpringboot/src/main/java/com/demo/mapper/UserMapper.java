@@ -13,4 +13,8 @@ public interface UserMapper {
 
     //多入参复杂动态sql查询
     List<User> select1(@Param("map") Map<String,Object> map, @Param("ageMax") Integer ageMax);
+
+    Long insertOne(User user);
+
+    Long insertBatch(@Param("users") List<User> users);
 }

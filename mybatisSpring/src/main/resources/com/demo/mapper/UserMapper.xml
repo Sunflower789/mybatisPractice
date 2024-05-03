@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE com.demo.mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-com.demo.mapper.dtd">
+<com.demo.mapper namespace="com.demo.com.demo.mapper.UserMapper">
+    <select id="selectUser" resultType="com.demo.entity.User">
+        select * from tb_user where id = #{id}
+    </select>
+</com.demo.mapper>

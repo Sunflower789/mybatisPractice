@@ -1,5 +1,5 @@
-import entity.User;
-import mapper.UserMapper;
+import com.demo.entity.User;
+import com.demo.mapper.UserMapper;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -18,7 +18,7 @@ public class MyBatisTest {
         // 获取SqlSession对象
         try (SqlSession session = sqlSessionFactory.openSession()) {
             // 获取SqlSession对象
-            //   --也可以不写Mapper接口直接通过namespace获取结果User user = (User) session.selectOne("mapper.UserMapper.selectUser", 7L);但是官方建议写mapper接口
+            //   --也可以不写Mapper接口直接通过namespace获取结果User user = (User) session.selectOne("com.demo.mapper.UserMapper.selectUser", 7L);但是官方建议写mapper接口
             UserMapper mapper = session.getMapper(UserMapper.class);
             // 执行方法(sql)并获取映射结果
             User user = mapper.selectUser(7L);

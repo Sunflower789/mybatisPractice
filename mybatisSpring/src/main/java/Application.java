@@ -1,5 +1,5 @@
-import entity.User;
-import mapper.UserMapper;
+import com.demo.entity.User;
+import com.demo.mapper.UserMapper;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
