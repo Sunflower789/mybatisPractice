@@ -4,6 +4,16 @@ spring:
     url: jdbc:mysql://localhost:3306/data_1?useServerPrepStmts=true
     username: root
     password: 123456
+    master:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://112.74.115.55:3306/data_1?useServerPrepStmts=true
+      username: root
+      password: SQL2022
+    slave:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3306/data_2?useServerPrepStmts=true
+      username: root
+      password: 123456
 
 mybatis:
   mapper-locations: classpath:mapper/*Mapper.xml #classpath:com/vehicle/adaptation/mapper/*Mapper.xml  #注意：一定要对应mapper映射xml文件的所在路径

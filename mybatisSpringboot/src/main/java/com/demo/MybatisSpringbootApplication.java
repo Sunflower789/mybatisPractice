@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,15 +26,25 @@ import java.util.Map;
 @SpringBootApplication
 public class MybatisSpringbootApplication {
 
+    public static void main(String[] args) {
+        SpringApplication.run(MybatisSpringbootApplication.class, args);
+    }
+
     @Resource
     SqlSessionFactory sqlSessionFactory;
 
     @Resource
     UserMapper userMapper;
 
-    public static void main(String[] args) {
-        SpringApplication.run(MybatisSpringbootApplication.class, args);
-    }
+    @Resource(name = "masterSqlSessionFactory")
+    SqlSessionFactory masterSqlSessionFactory;
+    @Resource(name = "slaveSqlSessionFactory")
+    SqlSessionFactory slaveSqlSessionFactory;
+
+    @Resource(name = "masterSqlSessionTemplate")
+    SqlSessionTemplate masterSqlSessionTemplate;
+    @Resource(name = "slaveSqlSessionTemplate")
+    SqlSessionTemplate slaveSqlSessionTemplate;
 
     /** springboot+mybatis框架整合测试 */
     @Test
@@ -91,5 +102,31 @@ public class MybatisSpringbootApplication {
             mapper.insertOne(user);
         }
         sqlSession.commit();  //sqlSession默认是不自动提交的，需要手动提交
+    }
+
+    /** 多数据源测试 ：这里图方便没有在mapper 接口层和配置文件层区分数据源；如果有区分应该可以直接注入mapper接口 */
+    @Test
+    public void test5(){
+        SqlSession masterSqlSession = masterSqlSessionFactory.openSession();
+        UserMapper masterMapper = masterSqlSession.getMapper(UserMapper.class);
+        User user1 = masterMapper.selectUser(1L);
+        System.out.println(user1);
+        System.out.println("=====");
+        SqlSession slaveSqlSession = slaveSqlSessionFactory.openSession();
+        UserMapper slaveMapper = slaveSqlSession.getMapper(UserMapper.class);
+        User user2 = slaveMapper.selectUser(1L);
+        System.out.println(user2);
+    }
+
+    /** 多数据源测试 ：这里图方便没有在mapper 接口层和配置文件层区分数据源；如果有区分应该可以直接注入mapper接口 */
+    @Test
+    public void test6(){
+        UserMapper masterMapper = masterSqlSessionTemplate.getMapper(UserMapper.class);
+        User user1 = masterMapper.selectUser(1L);
+        System.out.println(user1);
+        System.out.println("=====");
+        UserMapper slaveMapper = slaveSqlSessionTemplate.getMapper(UserMapper.class);
+        User user2 = slaveMapper.selectUser(1L);
+        System.out.println(user2);
     }
 }
